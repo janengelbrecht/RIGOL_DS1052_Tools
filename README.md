@@ -5,6 +5,7 @@ Dette repository indeholder filer der kan udvide funktionaliteten af RIgol DS105
 Du overfører først WFM eller CSV filer via USB stik til computeren fra DS1052E.
 Disse kan du så konvertere med python filerne.
 Med MATLAB filerne kan du så lave avanceret analyse på oscilloscop data.
+Matlab er valgt da de fleste ingeniørstuderende og professionelle ingeniører anvender Matlab.
 
 <b>pyCSV2MAT.py:</b>
 
