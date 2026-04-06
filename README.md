@@ -8,7 +8,8 @@ Med MATLAB filerne kan du så lave avanceret analyse på oscilloscop data.
 
 <b>pyCSV2MAT.py:</b>
 
-Dette program konverterer CSV-filer fra RIGOL oscilloskoper til MATLAB-format (.mat eller .npz). Programmet kan håndtere op til 2 kanaler (CH1 og CH2).
+Dette program konverterer CSV-filer fra RIGOL oscilloskoper til MATLAB-format (.mat eller .npz). 
+Programmet kan håndtere op til 2 kanaler (CH1 og CH2).
 
 Krav
 Påkrævet til MAT-filer:
@@ -102,8 +103,10 @@ Sample rate beregnes automatisk ud fra tidsforskelle
 
 <b>pyWFM2MAT.py:</b>
 
-Dette Python-script konverterer Rigol oscilloskops WFM-filer (binære datafiler) til MATLAB .mat-filer, der er kompatible med MATLAB-scriptet rigol_signal_analysis2.m.
-Scriptet ekstraherer spændingsdata fra kanal 1 og 2, beregner en tidsakse baseret på sample rate, og gemmer alt i et format MATLAB let kan indlæse.
+Dette Python-script konverterer Rigol oscilloskops WFM-filer (binære datafiler) til MATLAB .mat-filer, 
+der er kompatible med MATLAB-scriptet rigol_signal_analysis2.m.
+Scriptet ekstraherer spændingsdata fra kanal 1 og 2, beregner en tidsakse baseret på sample rate, 
+og gemmer alt i et format MATLAB let kan indlæse.
 
 Krav
 Software
@@ -160,11 +163,11 @@ Variable i filen:
 === Konvertering fuldført! ===
 
 Output-filens indhold (MATLAB-format)
-Variabelnavn          Beskrivelse                                           Dimension
-ch1_voltage            Spændingsdata fra kanal 1 (volt)      N×1 kolonnevektor
+Variabelnavn          Beskrivelse                           Dimension
+ch1_voltage           Spændingsdata fra kanal 1 (volt)      N×1 kolonnevektor
 ch2_voltage           Spændingsdata fra kanal 2 (volt)      N×1 kolonnevektor
-ch1_time                Tidsakse (sekunder)                            N×1 kolonnevektor
-sample_rate          Sample rate (Hz)                                  1×1 skalar
+ch1_time              Tidsakse (sekunder)                   N×1 kolonnevektor
+sample_rate           Sample rate (Hz)                      1×1 skalar
 
 Note: Hvis kanalerne har forskellig længde, udfyldes den korte med NaN (Not-a-Number).
 
@@ -179,29 +182,20 @@ xlabel('Tid (s)');
 ylabel('Spænding (V)');
 
 Fejlfinding
-Problem
-Mulig årsag
-Løsning
-"Kunne ikke finde nogen data i filen!"
-WFM-formatet er ukendt
-Tjek at filen er fra et Rigol oscilloskop. Prøv at gemme filen igen fra oscilloskopet.
-Kun én kanal fundet
-Kun kanal 1 var aktiv ved optagelse
-Scriptet gemmer kanal 2 som nulvektor. Det er normalt.
-Forkert tidsakse
-Sample rate er forkert
-Brug muligheden for at ændre sample rate manuelt. Tjek oscilloskopets indstillinger.
-ImportError: No module named 'scipy'
-SciPy ikke installeret
-Kør pip install scipy
+Problem                                   Mulig årsag                           Løsning
+"Kunne ikke finde nogen data i filen!"    WFM-formatet er ukendt                Tjek at filen er fra et Rigol oscilloskop. Prøv at gemme filen igen fra oscilloskopet.
+Kun én kanal fundet                       Kun kanal 1 var aktiv ved optagelse   Scriptet gemmer kanal 2 som nulvektor. Det er normalt.
+Forkert tidsakse                          Sample rate er forkert                Brug muligheden for at ændre sample rate manuelt. Tjek oscilloskopets indstillinger.
+ImportError: No module named 'scipy'      SciPy ikke installeret                Kør pip install scipy
 
 Sådan virker scriptet (teknisk baggrund)
+
 Scriptet bruger tre metoder til at finde data:
 Sektionsdetektion – Finder store sammenhængende datablokke (ikke-nul bytes).
 Interleaving – Hvis data er lagret som CH1, CH2, CH1, CH2… deinterleaver scriptet.
 Enkelt kanal – Finder den længste sekvens af ikke-nul bytes.
-Spændingsskalering:
-Værdi = (byte / 255) × 10 - 5 → giver området -5V til +5V (typisk for Rigol).
+
+Spændingsskalering:   Værdi = (byte / 255) × 10 - 5 → giver området -5V til +5V (typisk for Rigol).
 
 Bemærkninger
 Scriptet er optimeret til Rigol DS1052E, men burde fungere med de fleste Rigol-modeller.
@@ -236,14 +230,11 @@ Filen er klar til brug i MATLAB med rigol_signal_analysis2.m
 <b>rigol_signal_analasys.m:</b>
 
 Dette MATLAB-script analyserer signaler fra RIGOL DS1052E oscilloskopet. Det understøtter import af data i tre formater:
-Format
-Beskrivelse
-.mat
-MATLAB datafil (anbefales)
-.csv
-Kommasepareret tekstfil
-.wfm
-RIGOL binary waveform fil
+Format    Beskrivelse
+.mat      MATLAB datafil (anbefales)
+.csv      Kommasepareret tekstfil
+.wfm      RIGOL binary waveform fil
+
 Scriptet genererer automatisk en HTML5-rapport med grafer og måleresultater.
 
 2. Systemkrav
@@ -298,31 +289,28 @@ rigol_signal_analysis
 Vælg din datafil når dialogboksen åbnes
 
 Trin 3: Afkod resultaterne
+
 Scriptet åbner automatisk 4 figurer:
-Figur
-Indhold
-1
-Tidsdomæne for CH1 og CH2
-2
-FFT-spektrum med peak-hold og støjgulv
-3
-Harmonisk analyse (THD)
-4
-Krydskorrelation og Lissajous-figur
+Figur    Indhold
+1        Tidsdomæne for CH1 og CH2
+2        FFT-spektrum med peak-hold og støjgulv
+3        Harmonisk analyse (THD)
+4        Krydskorrelation og Lissajous-figur
+
 En HTML rapport gemmes i samme mappe som datafilen.
 
 5. Forstå outputtet
 Målte parametre
-Parameter                  Beskrivelse
+Parameter              Beskrivelse
 Grundfrekvens          Dominerende frekvens (forbedret med parabolsk interpolation)
-Vrms                           Effektivværdi (RMS)
-Vp / Vpp                     Topspænding / peak-to-peak
-THD                            Total harmonisk distortion (dB)
-SNR                             Signal-to-noise ratio (dB)
-SINAD                         Signal-to-noise and distortion (dB)
-ENOB                         Effektivt antal bits = (SINAD - 1.76)/6.02
-Crest-faktor              Vp / Vrms
-Formfaktor                 Vrms / gennemsnit af absolut værdi
+Vrms                   Effektivværdi (RMS)
+Vp / Vpp               Topspænding / peak-to-peak
+THD                    Total harmonisk distortion (dB)
+SNR                    Signal-to-noise ratio (dB)
+SINAD                  Signal-to-noise and distortion (dB)
+ENOB                   Effektivt antal bits = (SINAD - 1.76)/6.02
+Crest-faktor           Vp / Vrms
+Formfaktor             Vrms / gennemsnit af absolut værdi
 
 Faseforskel mellem CH1 og CH2
 Faseforskel beregnes via krydskorrelation og vises som:
