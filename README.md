@@ -100,7 +100,7 @@ Tomme linjer ignoreres
 Hvis en kanal har konstant spænding (< 1 mV variation), sættes den til 0V
 Sample rate beregnes automatisk ud fra tidsforskelle
 
-pyWFM2MAT.py:
+<b>pyWFM2MAT.py:</b>
 
 Dette Python-script konverterer Rigol oscilloskops WFM-filer (binære datafiler) til MATLAB .mat-filer, der er kompatible med MATLAB-scriptet rigol_signal_analysis2.m.
 Scriptet ekstraherer spændingsdata fra kanal 1 og 2, beregner en tidsakse baseret på sample rate, og gemmer alt i et format MATLAB let kan indlæse.
@@ -233,7 +233,7 @@ Variable i filen:
 === Konvertering fuldført! ===
 Filen er klar til brug i MATLAB med rigol_signal_analysis2.m
 
-rigol_signal_analasys.m:
+<b>rigol_signal_analasys.m:</b>
 
 Dette MATLAB-script analyserer signaler fra RIGOL DS1052E oscilloskopet. Det understøtter import af data i tre formater:
 Format
@@ -269,6 +269,7 @@ cfg.mark_harmonics      = true;    % Markér harmoniske
 cfg.fft_start_freq_hz   = 1;       % Startfrekvens i FFT plot
 
 4. Sådan bruges scriptet
+
 Trin 1: Forbered dine data
 Fra oscilloskopet til .mat fil:
 
@@ -289,6 +290,7 @@ sample_rate (valgfri - beregnes automatisk)
 timestamp (valgfri)
 
 Trin 2: Kør scriptet
+
 Åbn MATLAB
 Naviger til mappen med scriptet
 Skriv i kommandovinduet:
@@ -401,7 +403,7 @@ Filer større end ~100 MB kan medføre hukommelsesproblemer
 WFM format understøtter kun 16-bit int data
 Faseforskelsmåling kræver synkroniserede kanaler
 
-rigol_signal_analasys2.m:
+<b>rigol_signal_analasys2.m:</b>
 
 Programmet indlæser en .mat-fil fra et Rigol oscilloskop, beregner en lang række signalparametre for CH1 og CH2, og genererer en HTML-rapport med:
 Tidsdomæne (oscilloskopbillede)
