@@ -1,7 +1,12 @@
 # RIGOL_DS1052_Tools
 Python and MATLAB tools for Rigol DS1052E
 
-pyCSV2MAT.py:
+Dette repository indeholder filer der kan udvide funktionaliteten af RIgol DS1052E oscilloscopet.
+Du overfører først WFM eller CSV filer via USB stik til computeren fra DS1052E.
+Disse kan du så konvertere med python filerne.
+Med MATLAB filerne kan du så lave avanceret analyse på oscilloscop data.
+
+<b>pyCSV2MAT.py:</b>
 
 Dette program konverterer CSV-filer fra RIGOL oscilloskoper til MATLAB-format (.mat eller .npz). Programmet kan håndtere op til 2 kanaler (CH1 og CH2).
 
