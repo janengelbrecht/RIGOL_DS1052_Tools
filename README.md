@@ -513,5 +513,245 @@ Skift 80 til en dB-værdi efter eget valg.
 
 10. Bemærkninger
 Programmet overskriver eksisterende .png-filer i samme mappe uden advarsel.
+
+Det egentlige program:
+
+# 📘 RIGOL DS1052E OSCILLOSCOPE DATA ANALYZER — BRUGERVEJLEDNING
+
+**Version:** 1.0
+**Platform:** Windows / Linux / macOS (Python 3.8+ og PySide6)
+**Formål:** Professionel analyse af Rigol DS1052E oscilloskop-data (CSV-eksport)
+
+---
+
+## 📌 INDHOLD
+
+1. Introduktion
+2. Installation og afhængigheder
+3. Opstart
+4. Overordnet layout
+5. Fane 1: Measurements
+6. Fane 2: Oscilloscope
+7. Fane 3: Spectrum
+8. Fejlfinding
+9. Tastaturgenveje
+
+---
+
+## 1. INTRODUKTION
+
+**Rigol DS1052E Analyzer** er et desktopværktøj til avanceret signalanalyse baseret på CSV-data.
+
+### Funktioner
+
+* 15+ elektriske parametre (Vp, Vpp, Vrms, frekvens, THD, SNR, ENOB m.fl.)
+* Interaktiv bølgeformvisning med zoom og cursorer
+* FFT-baseret spektrumanalyse (op til 40 harmoniske)
+* Kanalrelationer: fase og forstærkning
+
+**Signalbehandling:**
+Automatisk kompensation for 8-bit ADC via Savitzky-Golay filtrering
+
+---
+
+## 2. INSTALLATION OG AFHÆNGIGHEDER
+
+| Pakke       | Installation        | Funktion         |
+| ----------- | ------------------- | ---------------- |
+| Python 3.8+ | python.org          | Runtime          |
+| PySide6     | pip install PySide6 | GUI              |
+| numpy       | pip install numpy   | Numerik          |
+| scipy       | pip install scipy   | Signalbehandling |
+
+### Verifikation
+
+```bash
+python -c "import PySide6, numpy, scipy; print('OK')"
+```
+
+---
+
+## 3. OPSTART
+
+```bash
+python rigol_analyzer.py
+```
+
+### Understøttede formater
+
+* CSV (2–4 kolonner)
+* WFM (begrænset support)
+
+Efter indlæsning opdateres alle analysefaner automatisk.
+
+---
+
+## 4. OVERORDNET LAYOUT
+
+```
++---------------------------------------------------------------+
+| HEADER: RIGOL DS1052E ANALYZER                                |
++---------------------------------------------------------------+
+| [MEASUREMENTS] [OSCILLOSCOPE] [SPECTRUM]                      |
+|                                                               |
+|                   Aktivt analysevindue                        |
+|                                                               |
++---------------------------------------------------------------+
+| STATUS BAR                                                    |
++---------------------------------------------------------------+
+```
+
+**Header:** Filinfo, kanaler, sample rate
+**Faner:** Navigerer mellem analysemoduler
+**Statuslinje:** Systemstatus og fejlmeddelelser
+
+---
+
+## 5. FANE 1: MEASUREMENTS
+
+### Struktur
+
+* CH1 (gul)
+* CH2 (cyan)
+* Signal Relations
+
+### Parametre
+
+| Parameter    | Beskrivelse                   | Enhed |
+| ------------ | ----------------------------- | ----- |
+| Vp           | Peak spænding                 | V     |
+| Vpp          | Peak-to-peak                  | V     |
+| Vrms         | RMS over hele perioder        | V     |
+| Frequency    | FFT-baseret med interpolation | Hz    |
+| Rise/Fall    | 10–90 % transitions           | s     |
+| Duty cycle   | Aktiv tidsandel               | %     |
+| Crest factor | Vp / Vrms                     | –     |
+| Form factor  | Vrms / rectified              | –     |
+| THD          | Total harmonisk forvrængning  | %/dB  |
+| SNR          | Signal/støj                   | dB    |
+| SINAD        | Signal + støj + forvrængning  | dB    |
+| ENOB         | Effektive bits                | bit   |
+
+### Kanalrelationer
+
+| Parameter       | Beskrivelse          |
+| --------------- | -------------------- |
+| Frequency match | ≤0,1 % afvigelse     |
+| Phase           | Forskydning (grader) |
+| Av              | Lineær gain          |
+| AvdB            | Gain i dB            |
+
+---
+
+## 6. FANE 2: OSCILLOSCOPE
+
+### Kontroller
+
+| Kontrol | Funktion                       |
+| ------- | ------------------------------ |
+| Zoom    | 0,1× – 20×                     |
+| Pan     | 0–100 %                        |
+| Mus     | LMB = Cursor A, RMB = Cursor B |
+
+### Cursorer
+
+* Cursor A (rød)
+* Cursor B (blå)
+
+**Viser:**
+
+* ΔT (tidsforskel)
+* f = 1/ΔT
+
+### Visning
+
+* 10×8 divisionsgitter
+* CH1 (gul), CH2 (cyan)
+* Automatisk V/div skalering
+
+---
+
+## 7. FANE 3: SPECTRUM
+
+### Karakteristika
+
+* dBV-skala: –90 til +10 dBV
+* Log frekvensakse
+* FFT op til Nyquist
+
+### Harmoniske
+
+* Op til 40 harmoniske
+* H1 fremhævet
+* Markører med indeks
+
+### Begrænsning
+
+* Analyse kun < 50 kHz
+
+### Eksempel
+
+```
+CH1: f0 = 1000 Hz
+H1: 1000 Hz  -3.5 dBV
+H2: 2000 Hz -45.2 dBV
+H3: 3000 Hz -52.1 dBV
+```
+
+---
+
+## 8. FEJLFINDING
+
+### Problem: Manglende pakker
+
+```bash
+pip install PySide6 numpy scipy
+```
+
+### Problem: CSV kan ikke læses
+
+Mulige årsager:
+
+* Forkert format
+* Korrupt fil
+* Encoding mismatch
+
+### Problem: Ingen harmonisk analyse
+
+* Signal > 50 kHz
+
+### Problem: Fase = N/A
+
+* Frekvenser matcher ikke
+
+### Problem: Forkert RMS
+
+* Beregning kræver detekterbar frekvens
+
+---
+
+## 9. TASTATURGENVEJE
+
+| Genvej | Funktion |
+| ------ | -------- |
+| Ctrl+O | Åbn fil  |
+| Ctrl+Q | Afslut   |
+
+---
+
+## 📌 AFSLUTTENDE BEMÆRKNINGER
+
+Dette værktøj udvider oscilloskopets analysekapacitet markant ved at kombinere:
+
+* Tidsdomæne
+* Frekvensdomæne
+* Statistisk analyse
+
+**Resultat:** Hurtigere, mere præcise målinger og dybere indsigt.
+
+---
+
+📢 Rapportér fejl via projektets issue-tracker.
+
 HTML-rapporten åbnes automatisk med MATLABs web-kommando.
 Alle grafer har mørk baggrund i MATLAB-figuren, men rapportens baggrund er lys for læsevenlighed.
