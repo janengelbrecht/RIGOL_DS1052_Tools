@@ -749,4 +749,46 @@ Dette værktøj udvider oscilloskopets analysekapacitet markant ved at kombinere
 
 **Resultat:** Hurtigere, mere præcise målinger og dybere indsigt.
 
+Når du gemme Rigol DS1052E data på USB stick:
+
+Det tager lang tid at gemme en CSV-fil på din Rigol DS1052E, fordi du højst sandsynligt har aktiveret funktionen "Long Memory" (lang hukommelse).
+
+Det er en praktisk funktion, men den gør desværre filerne enorme. Her er en forklaring på, hvorfor det går langsomt, og hvordan du får det til at gå hurtigere.
+
+💡 Den korte løsning
+Slå Long Memory fra, så bruger oscilloskopet den normale (og meget mindre) hukommelsesdybde. Herefter burde det kun tage et par sekunder at gemme filen.
+
+Sådan gør du:
+
+Tryk på knappen Acquire på frontpanelet.
+
+Tryk på den bløde menu-knap, der står MemDepth (Hukommelsesdybde).
+
+Vælg Normal i stedet for Long Mem.
+
+📊 Hvorfor "Long Memory" gør det langsomt
+Forskellen i data-mængde er afgørende for hastigheden:
+
+Indstilling	Hukommelsesdybde	Mængde data i CSV-filen
+Normal	16 kpts (16.000 datapunkter)	Lille / Normal
+Long Mem	1 Mpts (1.000.000 datapunkter)	64 gange større 
+Når du gemmer som CSV, gemmer oscilloskopet hvert eneste datapunkt i den valgte hukommelsesdybde.
+Med Long Mem skal det altså gemme op mod en million værdier, og da USB-porten på DS1052E kun kører i Full Speed (USB 1.1-hastighed), 
+tager denne overførsel simpelthen lang tid .
+
+Baggrundsviden: DS1052E kan faktisk gemme to typer CSV-filer: Displayed (kun det du ser på skærmen) eller Maximum (hele hukommelsesdybden) . 
+Når du gemmer en lang CSV-fil, gemmer du den store version.
+
+⚙️ Hvornår giver Long Mem mening?
+Selvom det er langsomt at gemme, er Long Memory en fantastisk funktion, når du måler. Den lader dig zoome voldsomt ind på et signal i oscilloskopet, 
+efter du har stoppet det, uden at miste detaljer omkring trigger-punktet .
+
+Mit råd er derfor:
+
+Til fejlfinding/analyse på skærmen: Slå Long Mem til – så får du alle detaljerne.
+
+Til at gemme data på USB-stick: Slå Long Mem fra – så går det meget hurtigere.
+
+Hvis du ofte har brug for at gemme de lange, detaljerede data, kan du overveje at bruge UltraScope-softwaren på en PC via USB-kablet . 
+Overførslen kan stadig være langsom, men du slipper for besværet med USB-sticket og får filen direkte på computeren.
 
