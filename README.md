@@ -514,7 +514,7 @@ Skift 80 til en dB-værdi efter eget valg.
 10. Bemærkninger
 Programmet overskriver eksisterende .png-filer i samme mappe uden advarsel.
 
-Det egentlige program:
+Det egentlige program: <B> rigol_analyzer.py</b>
 
 # 📘 RIGOL DS1052E OSCILLOSCOPE DATA ANALYZER — BRUGERVEJLEDNING
 
