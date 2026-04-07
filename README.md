@@ -749,9 +749,4 @@ Dette værktøj udvider oscilloskopets analysekapacitet markant ved at kombinere
 
 **Resultat:** Hurtigere, mere præcise målinger og dybere indsigt.
 
----
 
-📢 Rapportér fejl via projektets issue-tracker.
-
-HTML-rapporten åbnes automatisk med MATLABs web-kommando.
-Alle grafer har mørk baggrund i MATLAB-figuren, men rapportens baggrund er lys for læsevenlighed.
